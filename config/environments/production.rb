@@ -32,7 +32,8 @@ SampleApp::Application.configure do
 #  config.serve_static_assets = false
   # Put it back so that 'git heroku push' doesn't show warning.
   # See - http://docs.heroku.com/rails3
-  config.serve_static_assets = true
+  # Didn't make any difference, so take it out.
+#  config.serve_static_assets = true
 
   # Enable serving of images, stylesheets, and javascripts from an asset server
   # config.action_controller.asset_host = "http://assets.example.com"
