@@ -8,6 +8,17 @@ Bundler.require(:default, Rails.env) if defined?(Bundler)
 
 module SampleApp
   class Application < Rails::Application
+
+# don't generate view specs
+# Answer from
+# http://stackoverflow.com/questions/4235264/how-can-i-make-sure-rails-doesnt-generate-spec-tests-for-views-and-helpers
+
+config.generators do |g|
+  g.view_specs false
+  g.helper_specs false
+end
+
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
