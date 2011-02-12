@@ -13,6 +13,21 @@ describe UsersController do
       end
     end
 
+    describe "as an admin user" do
+      before(:each) do
+        @user  = Factory(:user, :email => "notadmin@example.com")
+        @admin = Factory(:user, :email => "admin@example.com", :admin => true)
+        user2  = Factory(:user, :email => "notadmin2@example.com")
+        test_sign_in(@admin)
+        get :index 
+      end
+
+      it "should have delete links" do
+        response.should have_selector("a", :content => "delete")
+      end
+
+    end
+
     describe "for signed-in users" do
 
       before(:each) do
@@ -24,6 +39,11 @@ describe UsersController do
         30.times do
           @users << Factory(:user, :email => Factory.next(:email))
         end
+      end
+
+      it "should not have delete links" do
+        test_sign_in(@user)
+        response.should_not have_selector("a", :content => "delete")
       end
 
       it "should be successful" do
@@ -319,6 +339,7 @@ describe UsersController do
         delete :destroy, :id => @user
         response.should redirect_to(root_path)
       end
+
     end
 
     describe "as an admin user" do

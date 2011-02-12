@@ -9,8 +9,13 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
-    @title = "Sign up"
+    unless signed_in?
+      @user = User.new
+      @title = "Sign up"
+    else
+      flash[:info] = "You're already logged in, so you cannot create a new account."
+      redirect_to root_path
+      end
   end
 
   def create
