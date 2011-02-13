@@ -141,6 +141,21 @@ describe UsersController do
       response.should have_selector("span.content", :content => mp2.content)
     end
 
+    it "should have the word Microposts in the sidebar" do
+      mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
+      mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
+      mp3 = Factory(:micropost, :user => @user, :content => "Fizz buzz")
+      get :show, :id => @user
+      response.should have_selector("strong", :content => "Microposts" )
+    end
+
+    it "should have the user.microposts.count in the sidebar" do
+      mp1 = Factory(:micropost, :user => @user, :content => "Foo bar")
+      mp2 = Factory(:micropost, :user => @user, :content => "Baz quux")
+      get :show, :id => @user
+      response.should have_selector("span.mcount", :content => @user.microposts.count.to_s() )
+    end
+
   end
 
   describe "GET 'new'" do
